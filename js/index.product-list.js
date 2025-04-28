@@ -1,42 +1,19 @@
-const products = [
-  {
-    id: 1,
-    title: "Baby Yoda",
-    description: "The Child of the Mandalorian",
-    price: 19.99,
-    image: "img/baby-yoda.svg",
-  },
-  {
-    id: 2,
-    title: "Banana",
-    description:
-      "A ripe, yellow banana full of potassium and perfect for a healthy snack.",
-    price: 14.99,
-    image: "img/banana.svg",
-  },
-  {
-    id: 3,
-    title: "Girl",
-    description:
-      "A cheerful girl character, great for creative projects and storytelling.",
-    price: 17.99,
-    image: "img/girl.svg",
-  },
-  {
-    id: 4,
-    title: "Viking",
-    description: "A brave Viking warrior, ready for adventure and exploration.",
-    price: 21.99,
-    image: "img/viking.svg",
-  },
-];
+// fetch('api/products.json')
+//   .then( response => response.json() )
+//   .then( products => renderProducts(products) );
 
-function renderProducts(products) {
+const response = await fetch("api/products.json");
+const products = await response.json();
+renderProducts(products);
+
+function renderProducts(products, rate = 1) {
   let productHTML = "";
   for (const product of products) {
     productHTML += `
         <article class="products__item">
-            <img class="products__image" src="${product.image}" alt="${product.title}">
+            <img class="products__image" src="${product.image}" alt="${
+      product.title
+    }">
             <h3 class="products__name">${product.title}</h3>
             <p class="products__description">${product.description}</p>
             </p>
@@ -45,7 +22,7 @@ function renderProducts(products) {
                     Info
                 </button>
                 <button class="products__button products__button--buy button button-card">
-                    Buy for $${product.price}
+                    Buy for ${(product.price * rate).toFixed(2)}
                 </button>
             </div>
         </article>
@@ -54,4 +31,18 @@ function renderProducts(products) {
   const productList = document.querySelector(".products__list");
   productList.innerHTML = productHTML;
 }
-renderProducts(products);
+
+let currencies;
+async function changeCurrency() {
+  if (!currencies) {
+    const response = await fetch(
+      "https://api.exchangerate-api.com/v4/latest/USD"
+    );
+    currencies = await response.json();
+  }
+  const selectedCurrency = document.querySelector(".products__currency").value;
+  const rate = currencies.rates[selectedCurrency];
+  renderProducts(products, rate);
+}
+
+document.querySelector(".products__currency").addEventListener('change', changeCurrency);

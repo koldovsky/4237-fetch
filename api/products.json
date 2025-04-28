@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "Baby Yoda",
+    "description": "The Child of the Mandalorian",
+    "price": 19.99,
+    "image": "img/baby-yoda.svg"
+  },
+  {
+    "id": 2,
+    "title": "Banana",
+    "description": "A ripe, yellow banana full of potassium and perfect for a healthy snack.",
+    "price": 14.99,
+    "image": "img/banana.svg"
+  },
+  {
+    "id": 3,
+    "title": "Girl",
+    "description": "A cheerful girl character, great for creative projects and storytelling.",
+    "price": 17.99,
+    "image": "img/girl.svg"
+  },
+  {
+    "id": 4,
+    "title": "Viking",
+    "description": "A brave Viking warrior, ready for adventure and exploration.",
+    "price": 21.99,
+    "image": "img/viking.svg"
+  }
+]
